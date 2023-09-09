@@ -1,0 +1,26 @@
+body {
+
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+
+    font-family: calibri;
+    font-size: 1rem;
+
+}
+
+header {
+
+    height: 10%;
+    padding: 2rem;
+    background-color: green;
+
+    color: white;
+
+}
+
+main {
+
+    padding: 2rem;
+
+}
