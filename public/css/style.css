@@ -24,3 +24,12 @@ main {
     padding: 2rem;
 
 }
+
+section {
+
+    background-color: aquamarine;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 1rem;
+
+}

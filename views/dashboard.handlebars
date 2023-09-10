@@ -12,3 +12,10 @@
     <input type="submit" id="submit" value="Post" />
 
 </form>
+
+{{#each myBlogPosts}}
+<section>
+    <h2>{{this.title}}</h2>
+    <p>{{this.content}}</p>
+</section>
+{{/each}}

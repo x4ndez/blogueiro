@@ -10,17 +10,31 @@ router.get("/", (req, res) => {
 
 });
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", async (req, res) => {
 
     if (req.session.loggedIn) {
 
-        const myBlogPosts = {
+        const user = await Users.findOne({
+            where: {
+                username: req.session.username,
+            },
+            raw: true,
+        });
 
+        const myBlogPosts = await BlogPosts.findAll({
+            where: {
+                userId: user.id,
+            },
+            raw: true,
+        });
 
+        // const myBlogPostsMapped = myBlogPosts.map((thread) => {
+        //     return thread.get({ plain: true });
+        // });
 
-        }
+        console.log(myBlogPosts);
 
-        res.render("dashboard", {});
+        res.render("dashboard", { myBlogPosts });
 
     } else {
 
