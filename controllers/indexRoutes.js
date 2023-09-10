@@ -12,7 +12,46 @@ router.get("/", (req, res) => {
 
 router.get("/dashboard", (req, res) => {
 
-    res.render("dashboard");
+    if (req.session.loggedIn) {
+
+        const myBlogPosts = {
+
+
+
+        }
+
+        res.render("dashboard", {});
+
+    } else {
+
+        res.redirect("login");
+
+    }
+
+
+
+});
+
+router.post("/dashboard", async (req, res) => {
+
+    const user = await Users.findOne({
+        where: {
+            username: req.session.username,
+        },
+        raw: true,
+    });
+
+    const newBlogPost = {
+
+        title: req.body.title,
+        content: req.body.content,
+        userId: user.id,
+
+    }
+
+    await BlogPosts.create(newBlogPost);
+
+    res.redirect("dashboard");
 
 });
 
@@ -39,12 +78,14 @@ router.post("/login", async (req, res) => {
         if (req.body.password === user.password) {
 
             console.log("Logged in successfully");
-            res.render("dashboard");
+            req.session.loggedIn = true;
+            req.session.username = user.username;
+            res.redirect("dashboard");
 
         } else {
 
             console.log("Unsuccessful login attempt!");
-            res.render("login");
+            res.redirect("login");
 
         }
 
@@ -145,12 +186,12 @@ router.post("/login/new-account", async (req, res) => {
         try {
             await Users.create(newAccount);
         } catch (err) {
-            res.render("pnf");
+            res.redirect("pnf");
         }
 
     }
 
-    res.render("login");
+    res.redirect("login");
 
 });
 
