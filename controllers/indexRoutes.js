@@ -33,6 +33,9 @@ router.get("/blogpost/:id", async (req, res) => {
 
     const blogPostUnformatted = await BlogPosts.findByPk(req.params.id, {
         include: [{ model: Comments, include: { model: Users } }],
+        order: [
+            [{ model: Comments }, "id", "ASC"]
+        ],
     });
 
     const blogPost = blogPostUnformatted.get({ plain: true })
