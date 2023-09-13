@@ -354,7 +354,7 @@ router.post("/login/new-account", async (req, res) => {
 
     }
 
-    res.redirect("login");
+    res.redirect("/login");
 
 });
 
