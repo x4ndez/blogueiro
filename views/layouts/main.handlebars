@@ -14,8 +14,20 @@
 
 <body>
 
-    <header>BLOGUEIRO >> <a href="/">Home</a> / <a href="/dashboard">Dashboard</a> / <a href="/login">Login</a> /
-        {{newAccount.username}}</header>
+    <header>BLOGUEIRO >>
+
+        {{#if loginData.loggedIn}}
+
+        <a href="/">Home</a> / <a href="/dashboard">Dashboard</a> / {{loginData.username}} <a
+            href="/logout"><i>(logout)</i></a>
+
+        {{else}}
+
+        <a href="/">Home</a> / <a href="/login">Login</a>
+
+        {{/if}}
+
+    </header>
 
     <main>
 

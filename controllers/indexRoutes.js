@@ -4,13 +4,37 @@ const BlogPosts = require("../models/BlogPosts");
 
 // PATH: localhost/
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
 
-    res.render("index");
+    const loginData = {
+
+        loggedIn: req.session.loggedIn,
+        username: req.session.username,
+
+    }
+
+    const blogPosts = await BlogPosts.findAll({
+        raw: true,
+    });
+
+    res.render("index", { blogPosts, loginData });
+
+});
+
+router.get("/blogPost", async (req, res) => {
+
+
 
 });
 
 router.get("/dashboard", async (req, res) => {
+
+    const loginData = {
+
+        loggedIn: req.session.loggedIn,
+        username: req.session.username,
+
+    }
 
     if (req.session.loggedIn) {
 
@@ -28,13 +52,7 @@ router.get("/dashboard", async (req, res) => {
             raw: true,
         });
 
-        // const myBlogPostsMapped = myBlogPosts.map((thread) => {
-        //     return thread.get({ plain: true });
-        // });
-
-        console.log(myBlogPosts);
-
-        res.render("dashboard", { myBlogPosts });
+        res.render("dashboard", { myBlogPosts, loginData });
 
     } else {
 
@@ -42,7 +60,59 @@ router.get("/dashboard", async (req, res) => {
 
     }
 
+});
 
+router.get("/dashboard/edit-blogpost/:id", async (req, res) => {
+
+    const loginData = {
+
+        loggedIn: req.session.loggedIn,
+        username: req.session.username,
+
+    }
+
+    const postId = req.params.id;
+
+    const blogPost = await BlogPosts.findByPk(postId, {
+        raw: true,
+    });
+
+    res.render("blogpost-edit", { blogPost, loginData });
+
+});
+
+router.put("/dashboard/edit-blogpost/", async (req, res) => {
+
+    const postId = req.body.id;
+
+    const userData = {
+
+        title: req.body.title,
+        content: req.body.content,
+
+    }
+
+    await BlogPosts.update(userData, {
+        where: {
+            id: postId,
+        }
+    });
+
+    res.status(200).json();
+
+});
+
+router.delete("/dashboard/edit-blogpost/", async (req, res) => {
+
+    const postId = req.body.id;
+
+    await BlogPosts.destroy({
+        where: {
+            id: postId,
+        }
+    });
+
+    res.status(200).json();
 
 });
 
@@ -71,7 +141,14 @@ router.post("/dashboard", async (req, res) => {
 
 router.get("/login", (req, res) => {
 
-    res.render("login");
+    const loginData = {
+
+        loggedIn: req.session.loggedIn,
+        username: req.session.username,
+
+    }
+
+    res.render("login", { loginData });
 
 });
 
@@ -107,9 +184,24 @@ router.post("/login", async (req, res) => {
 
 });
 
+router.get("/logout", (req, res) => {
+
+    req.session.destroy();
+
+    res.redirect("/");
+
+});
+
 router.get("/login/new-account", (req, res) => {
 
-    res.render("new-account");
+    const loginData = {
+
+        loggedIn: req.session.loggedIn,
+        username: req.session.username,
+
+    }
+
+    res.render("new-account", { loginData });
 
 });
 
@@ -154,7 +246,6 @@ async function validatePassword(password) {
 router.post("/login/new-account", async (req, res) => {
 
     // TODO: encrypt pw
-    // TODO: validations
 
     const newAccountInput = {
         email: req.body.email,
@@ -211,7 +302,14 @@ router.post("/login/new-account", async (req, res) => {
 
 router.get("*", (req, res) => {
 
-    res.render("pnf");
+    const loginData = {
+
+        loggedIn: req.session.loggedIn,
+        username: req.session.username,
+
+    }
+
+    res.render("pnf", loginData);
 
 });
 

@@ -1,0 +1,19 @@
+<h1>EDIT BLOGPOST</h1>
+
+{{!-- /dashboard/edit-blogpost/{{this.id}} --}}
+
+<form>
+
+    <label for="title">Post title:</label><br>
+    <input type="text" id="title" name="title" value="{{blogPost.title}}" /><br>
+
+    <label for="content">Post content:</label><br>
+    <textarea id="content" name="content">{{blogPost.content}}</textarea><br>
+
+    <input type="submit" id="submit" data-id="{{blogPost.id}}" value="Edit Post" />
+
+</form>
+
+<button id="delete-post">Delete Post</button>
+
+<script src="/js/blogpost-edit.js"></script>
