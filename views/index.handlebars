@@ -4,5 +4,9 @@
 {{#each blogPosts}}
 <section>
     <h2><a href="/blogpost/{{id}}">{{title}}</a></h2>
+    <p class="timestamp" data-raw="{{updatedAt}}"></p>
 </section>
 {{/each}}
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="/js/index.js"></script>

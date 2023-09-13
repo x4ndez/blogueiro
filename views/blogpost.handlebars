@@ -25,7 +25,7 @@
 
     <p>{{user.username}} says: </p>
     <p>{{content}}</p>
-    <p>{{createdAt}}</p>
+    <p class="timestamp" data-raw="{{createdAt}}"></p>
 
 </div>
 
@@ -37,4 +37,5 @@
 
 {{/if}}
 
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 <script src="/js/blogpost.js"></script>
