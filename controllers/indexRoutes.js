@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const bcrypt = require("bcrypt");
 const Users = require("../models/Users");
 const BlogPosts = require("../models/BlogPosts");
 const Comments = require("../models/Comments");
@@ -224,7 +225,7 @@ router.post("/login", async (req, res) => {
         res.render("pnf");
     } else {
 
-        if (req.body.password === user.password) {
+        if (await bcrypt.compare(req.body.password, user.password)) {
 
             console.log("Logged in successfully");
             req.session.loggedIn = true;
@@ -345,6 +346,8 @@ router.post("/login/new-account", async (req, res) => {
             password: req.body.password,
 
         }
+
+        newAccount.password = await bcrypt.hash(newAccount.password, 10);
 
         try {
             await Users.create(newAccount);
