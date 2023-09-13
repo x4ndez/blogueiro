@@ -16,6 +16,7 @@ router.get("/", async (req, res) => {
 
     const blogPosts = await BlogPosts.findAll({
         raw: true,
+        order: [["id", "DESC"]],
     });
 
     res.render("index", { blogPosts, loginData });
@@ -105,6 +106,7 @@ router.get("/dashboard", async (req, res) => {
             where: {
                 userId: user.id,
             },
+            order: [["id", "DESC"]],
             raw: true,
         });
 
