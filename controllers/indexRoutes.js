@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Users = require("../models/Users");
 const BlogPosts = require("../models/BlogPosts");
+const Comments = require("../models/Comments");
 
 // PATH: localhost/
 
@@ -21,9 +22,61 @@ router.get("/", async (req, res) => {
 
 });
 
-router.get("/blogPost", async (req, res) => {
+router.get("/blogpost/:id", async (req, res) => {
 
+    const loginData = {
 
+        loggedIn: req.session.loggedIn,
+        username: req.session.username,
+
+    }
+
+    const blogPostUnformatted = await BlogPosts.findByPk(req.params.id, {
+        include: [{ model: Comments, include: { model: Users } }],
+    });
+
+    const blogPost = blogPostUnformatted.get({ plain: true })
+
+    console.log(blogPost.comments);
+
+    let hasComments;
+
+    if (blogPost.comments.length > 0) hasComments = true;
+    else hasComments = false;
+
+    res.render("blogpost", { blogPost, hasComments, loginData });
+});
+
+router.post("/blogpost", async (req, res) => {
+
+    const postData = {
+
+        postId: req.body.id,
+        username: req.body.username,
+        commentContent: req.body.content,
+
+    }
+
+    const userIdFromUsername = await Users.findOne({
+        raw: true,
+        where: {
+            username: postData.username,
+        }
+    });
+
+    const commentData = {
+
+        content: postData.commentContent,
+        blogpostId: parseInt(postData.postId),
+        userId: userIdFromUsername.id,
+
+    }
+
+    const newComment = await Comments.create(commentData, {
+        raw: true,
+    });
+
+    res.status(200).json(newComment);
 
 });
 

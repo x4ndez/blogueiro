@@ -1,0 +1,40 @@
+<h1>{{blogPost.title}}</h1>
+<p>{{blogPost.content}}</p>
+
+{{#if loginData.loggedIn}}
+
+<form>
+
+    <label for="content">Comment:</label><br>
+    <textarea id="content" name="content"></textarea><br>
+
+    <input type="submit" id="submit" data-id="{{blogPost.id}}" data-user="{{loginData.username}}"
+        value="Leave a Comment" />
+
+</form>
+
+{{/if}}
+
+<h3>Comments:</h3>
+
+{{#if hasComments}}
+
+{{#each blogPost.comments}}
+
+<div class="comment" id="comment-{{id}}">
+
+    <p>{{user.username}} says: </p>
+    <p>{{content}}</p>
+    <p>{{createdAt}}</p>
+
+</div>
+
+{{/each}}
+
+{{else}}
+
+<p>This post has no comments.</p>
+
+{{/if}}
+
+<script src="/js/blogpost.js"></script>

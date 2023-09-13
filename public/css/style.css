@@ -33,3 +33,20 @@ section {
     border-radius: 1rem;
 
 }
+
+.comment {
+
+    background-color: burlywood;
+    padding: 1rem;
+    margin: 2rem 1rem 1rem 1rem;
+    border-radius: 1rem;
+
+    transition: 1s margin-left;
+
+}
+
+.comment:hover {
+
+    margin-left: 3rem;
+
+}
