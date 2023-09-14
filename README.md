@@ -57,7 +57,7 @@ THEN I am able to view posts and comments but I am prompted to log in again befo
 
 ## Deployed Application
 The deployed application can be viewed from the following link: <https://blogueiro-3c27fd1d5b34.herokuapp.com/>.<br>
-If in future the deployed link is not in function, you can view a short walkthrough video of the application at the following link: <>.<br>
+If in future the deployed link is not in function, you can view a short walkthrough video of the application at the following link: <https://drive.google.com/file/d/1ywyuVs1IhdKt1jhdALRuAN7FPeQ6b4Z0/view?usp=sharing>.<br>
 Alternatively, this walkthrough video can be downloaded from the `assets` folder of this repo.
 
 ## Usage
