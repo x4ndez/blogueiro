@@ -16,10 +16,17 @@ router.get("/", async (req, res) => {
 
     }
 
-    const blogPosts = await BlogPosts.findAll({
-        raw: true,
+    const blogPostsUnformatted = await BlogPosts.findAll({
+        // raw: true,
+        include: [{ model: Users }],
         order: [["id", "DESC"]],
     });
+
+    const blogPosts = blogPostsUnformatted.map((post) => {
+        return post.get({ plain: true });
+    });
+
+    console.log(blogPosts);
 
     res.render("index", { blogPosts, loginData });
 
@@ -41,7 +48,7 @@ router.get("/blogpost/:id", async (req, res) => {
         ],
     });
 
-    const blogPost = blogPostUnformatted.get({ plain: true })
+    const blogPost = blogPostUnformatted.get({ plain: true });
 
     console.log(blogPost.comments);
 
