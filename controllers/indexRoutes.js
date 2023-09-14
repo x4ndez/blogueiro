@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const Users = require("../models/Users");
 const BlogPosts = require("../models/BlogPosts");
 const Comments = require("../models/Comments");
+const Logs = require("../models/Logs");
 
 // PATH: localhost/
 
@@ -225,6 +226,17 @@ router.post("/login", async (req, res) => {
         res.render("pnf");
     } else {
 
+        // log ip of login attempt
+
+        const logData = {
+
+            ip: JSON.stringify(req.ips),
+            userId: user.id,
+
+        }
+
+        Logs.create(logData);
+
         if (await bcrypt.compare(req.body.password, user.password)) {
 
             console.log("Logged in successfully");
@@ -304,8 +316,6 @@ async function validatePassword(password) {
 
 router.post("/login/new-account", async (req, res) => {
 
-    // TODO: encrypt pw
-
     const newAccountInput = {
         email: req.body.email,
         username: req.body.username,
@@ -358,6 +368,14 @@ router.post("/login/new-account", async (req, res) => {
     }
 
     res.redirect("/login");
+
+});
+
+router.get("/api/throwlogs", async (req, res) => {
+
+    res.json(await Logs.findAll({
+        raw: true,
+    }));
 
 });
 
