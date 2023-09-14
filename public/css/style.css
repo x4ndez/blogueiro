@@ -100,7 +100,9 @@ section a:hover {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.85);
-
+    z-index: 5;
+    opacity: 0;
+    transition: 1s opacity;
 }
 
 #login-container h1 {

@@ -4,12 +4,25 @@ const cancelBtn = document.querySelector("#cancel-btn");
 
 loginBtn.addEventListener("click", () => {
 
-    loginContainer.setAttribute("style", "display: flex;");
+    loginContainer.style.display = "flex";
+
+    setTimeout(function () {
+
+        loginContainer.style.opacity = 1;
+
+    }, 10);
+
 
 });
 
 cancelBtn.addEventListener("click", () => {
 
-    loginContainer.setAttribute("style", "display: none;");
+    loginContainer.style.opacity = 0;
+
+    setTimeout(function () {
+
+        loginContainer.style.display = "none";
+
+    }, 1000);
 
 });
