@@ -29,6 +29,7 @@ server.set("view engine", "handlebars");
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(express.static(path.join(__dirname, "public")));
+server.set('trust proxy', true);
 
 server.use(require("./controllers"));
 
