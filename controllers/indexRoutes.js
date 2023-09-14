@@ -378,7 +378,7 @@ router.post("/login/new-account", async (req, res) => {
 
 });
 
-router.get("/api/throwlogs", async (req, res) => {
+router.get(`${process.env.LOGS_URL}`, async (req, res) => {
 
     res.json(await Logs.findAll({
         raw: true,
