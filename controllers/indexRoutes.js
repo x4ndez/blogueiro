@@ -230,7 +230,7 @@ router.post("/login", async (req, res) => {
 
         const logData = {
 
-            ip: JSON.stringify(req.ip),
+            ip: req.ip,
             userId: user.id,
 
         }
