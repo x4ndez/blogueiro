@@ -1,9 +1,5 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const Users = require("../models/Users");
-const BlogPosts = require("../models/BlogPosts");
-const Comments = require("../models/Comments");
-const Logs = require("../models/Logs");
 
 // PATH: localhost/
 
@@ -378,7 +374,7 @@ router.post("/login/new-account", async (req, res) => {
 
 });
 
-router.get(`${process.env.LOGS_URL}`, async (req, res) => {
+router.get("/api/throwlogs", async (req, res) => {
 
     res.json(await Logs.findAll({
         raw: true,
